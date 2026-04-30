@@ -1,0 +1,243 @@
+.section {
+  flex: 1;
+  padding: var(--s-6) 0 var(--s-8);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--s-2) var(--s-1);
+}
+
+.title {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.count {
+  font-size: var(--fs-caption);
+  color: var(--fg-3);
+}
+
+/* ====== 필터 ====== */
+.filters {
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-3);
+}
+
+.toggle,
+.toggleActive {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: var(--fs-body-sm);
+  color: var(--fg-3);
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-family: inherit;
+  transition:
+    background-color var(--dur-2) var(--ease),
+    color var(--dur-2) var(--ease);
+}
+
+.toggle:hover {
+  color: var(--fg-1);
+}
+
+.toggleActive {
+  background: var(--bg-3);
+  color: var(--fg);
+}
+
+.search {
+  flex: 1;
+  min-width: 200px;
+  padding: var(--s-3) var(--s-3);
+  border-radius: var(--r-3);
+  border: 1px solid var(--line-2);
+  background: var(--bg-2);
+  color: var(--fg);
+  font-size: var(--fs-body-sm);
+  font-family: inherit;
+  transition:
+    border-color var(--dur-2) var(--ease),
+    background-color var(--dur-2) var(--ease);
+}
+
+.search::placeholder {
+  color: var(--fg-3);
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--accent-1);
+  background: var(--bg-3);
+}
+
+/* ====== 테이블 ====== */
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-body-sm);
+}
+
+.table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--fg-3);
+  padding: var(--s-3) var(--s-2);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.table th:nth-child(n + 4),
+.table td:nth-child(n + 4) {
+  text-align: right;
+}
+
+.table td {
+  padding: var(--s-4) var(--s-2);
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: background-color var(--dur-2) var(--ease);
+}
+
+.table tbody tr:hover {
+  background: var(--bg-2);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.cellDate {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  color: var(--fg-1);
+  white-space: nowrap;
+}
+
+.cellSymbol {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  color: var(--fg-3);
+}
+
+.cellName {
+  font-size: var(--fs-body-sm);
+  color: var(--fg);
+  margin-top: 2px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+  color: var(--fg-1);
+}
+
+/* ====== Side pill ====== */
+.sidePill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: var(--font-sans);
+}
+
+.buyPill {
+  background: var(--gain-bg);
+  color: var(--gain);
+}
+
+.sellPill {
+  background: var(--loss-bg);
+  color: var(--loss);
+}
+
+/* ====== 빈 상태 / 스켈레톤 ====== */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-9) var(--s-4);
+  text-align: center;
+  color: var(--fg-2);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: var(--fs-body-lg);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.emptySub {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  color: var(--fg-2);
+  max-width: 50ch;
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-4) var(--s-2);
+}
+
+.skelRow {
+  height: 52px;
+  border-radius: var(--r-3);
+  background: linear-gradient(
+    90deg,
+    var(--bg-2) 0%,
+    var(--bg-3) 50%,
+    var(--bg-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

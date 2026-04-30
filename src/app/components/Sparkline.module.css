@@ -1,0 +1,28 @@
+.svg {
+  display: block;
+  overflow: visible;
+}
+
+.svg path {
+  stroke: currentColor;
+  vector-effect: non-scaling-stroke;
+}
+
+.gain {
+  color: var(--gain);
+}
+
+.loss {
+  color: var(--loss);
+}
+
+.neutral {
+  color: var(--fg-3);
+}
+
+.placeholder {
+  display: block;
+  background: var(--bg-2);
+  border-radius: var(--r-2);
+  opacity: 0.5;
+}

@@ -1,0 +1,71 @@
+.wrap { padding-bottom: var(--s-11); margin-top: calc(-1 * var(--s-7)); }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--s-5); }
+.dash {
+  background: var(--bg-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-5);
+  overflow: hidden;
+  box-shadow: 0 0 80px -10px rgba(99, 102, 241, 0.18);
+  animation: rise 800ms var(--ease) 400ms both;
+}
+.chrome {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  align-items: center; padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+.dots { display: flex; gap: 6px; }
+.dots span { width: 11px; height: 11px; border-radius: 50%; background: var(--bg-4); }
+.url { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); text-align: center; }
+.body { display: grid; grid-template-columns: 220px 1fr; min-height: 540px; }
+.side { border-right: 1px solid var(--line); padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-5); }
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; letter-spacing: -0.02em; }
+.menu { display: flex; flex-direction: column; gap: 2px; }
+.menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: var(--r-3);
+  font-size: 13px; color: var(--fg-2); cursor: pointer;
+  transition: all var(--dur-2) var(--ease);
+}
+.menu a img { filter: var(--icon-filter); width: 16px; height: 16px; }
+.menu a:hover { background: rgba(127,127,127,0.06); color: var(--fg); }
+.menu a.active { background: rgba(168,85,247,0.10); color: var(--fg); }
+.menu a.active img { filter: var(--icon-filter-accent); }
+.cash { margin-top: auto; padding: 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-3); }
+.cashLab { font-size: 11px; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.06em; }
+.cashVal { font-family: var(--font-mono); font-size: 18px; color: var(--fg); font-feature-settings: 'tnum'; margin-top: 2px; }
+.main { padding: var(--s-6); }
+.top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--s-5); }
+.lab { font-size: 12px; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.06em; }
+.big { font-family: var(--font-mono); font-size: 36px; font-weight: 500; letter-spacing: -0.02em; margin-top: 4px; font-feature-settings: 'tnum'; }
+.bigSub { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.since { font-size: 12px; color: var(--fg-3); }
+.pl { font-family: var(--font-mono); font-size: 13px; font-feature-settings: 'tnum'; padding: 2px 8px; border-radius: var(--r-pill); }
+.range { display: flex; gap: 2px; padding: 3px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-3); }
+.range button {
+  background: transparent; border: 0; cursor: pointer;
+  font-family: var(--font-mono); font-size: 11px; color: var(--fg-3);
+  padding: 5px 10px; border-radius: 5px;
+}
+.range .activeRange, .range button.activeRange { background: var(--bg-3); color: var(--fg); }
+.chart { margin: 8px 0 var(--s-5); padding: var(--s-3) 0; }
+.chart svg { width: 100%; height: 160px; }
+.holdingsHead { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; font-size: 13px; color: var(--fg-2); }
+.table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table th { text-align: left; font-weight: 500; color: var(--fg-3); padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+.table th:nth-child(n+2), .table td:nth-child(n+2) { text-align: right; }
+.table td { padding: 14px 8px; border-bottom: 1px solid var(--line); }
+.table tbody tr:last-child td { border-bottom: 0; }
+.tk { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+.nm { font-size: 14px; color: var(--fg); margin-top: 1px; }
+.mono { font-family: var(--font-mono); font-feature-settings: 'tnum'; color: var(--fg-1); }
+.gain { color: var(--gain); background: var(--gain-bg); }
+.loss { color: var(--loss); background: var(--loss-bg); }
+td.gain, td.loss { background: transparent; padding: 14px 8px; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 800px) {
+  .body { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .top { flex-direction: column; gap: var(--s-4); }
+}

@@ -1,0 +1,273 @@
+.section {
+  flex: 1;
+  padding: var(--s-6) 0 var(--s-8);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--s-2) var(--s-1);
+}
+
+.title {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.count {
+  font-size: var(--fs-caption);
+  color: var(--fg-3);
+}
+
+/* ====== 리스트 ====== */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-2);
+  border-bottom: 1px solid var(--line);
+  transition: background-color var(--dur-2) var(--ease);
+}
+
+.rowSpark {
+  flex: 0 0 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row:hover {
+  background: var(--bg-2);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.rowLeft {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.rowSymbol {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  color: var(--fg-3);
+}
+
+.rowName {
+  font-size: var(--fs-body-sm);
+  color: var(--fg);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowMarket {
+  font-size: var(--fs-caption);
+  color: var(--fg-4);
+  margin-top: 2px;
+}
+
+.rowMid {
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
+}
+
+.rowPrice {
+  font-family: var(--font-mono);
+  font-size: var(--fs-body-sm);
+  color: var(--fg);
+  font-feature-settings: 'tnum';
+}
+
+.rowDelta {
+  margin-top: 4px;
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  font-feature-settings: 'tnum';
+}
+
+.rowRight {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.buyBtn {
+  padding: 6px var(--s-4);
+  border-radius: var(--r-3);
+  border: 0;
+  background: var(--gain);
+  color: var(--bg);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    filter var(--dur-2) var(--ease),
+    opacity var(--dur-2) var(--ease);
+}
+
+.buyBtn:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.buyBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.removeBtn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-3);
+  border: 1px solid var(--line-2);
+  background: transparent;
+  color: var(--fg-3);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease),
+    color var(--dur-2) var(--ease);
+}
+
+.removeBtn:hover:not(:disabled) {
+  background: var(--loss-bg);
+  border-color: var(--loss);
+  color: var(--loss);
+}
+
+.removeBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ====== 톤 ====== */
+.gain {
+  color: var(--gain);
+  background: var(--gain-bg);
+}
+
+.loss {
+  color: var(--loss);
+  background: var(--loss-bg);
+}
+
+.neutral {
+  color: var(--fg-3);
+  background: transparent;
+}
+
+/* ====== 빈 상태 / 스켈레톤 ====== */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-9) var(--s-4);
+  text-align: center;
+  color: var(--fg-2);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: var(--fs-body-lg);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.emptySub {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  color: var(--fg-2);
+}
+
+.emptyLink {
+  color: var(--accent-1);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-2);
+}
+
+.skelRow {
+  height: 64px;
+  border-radius: var(--r-3);
+  background: linear-gradient(
+    90deg,
+    var(--bg-2) 0%,
+    var(--bg-3) 50%,
+    var(--bg-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 880px) {
+  .rowSpark {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .row {
+    flex-wrap: wrap;
+    row-gap: var(--s-2);
+  }
+  .rowLeft {
+    flex: 1 1 100%;
+  }
+  .rowMid {
+    margin-left: 0;
+    text-align: left;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .rowRight {
+    flex: 0 0 auto;
+  }
+}

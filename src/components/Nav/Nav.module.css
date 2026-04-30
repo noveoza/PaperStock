@@ -1,0 +1,42 @@
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  border-bottom: 1px solid transparent;
+  transition: backdrop-filter var(--dur-2) var(--ease),
+              background-color var(--dur-2) var(--ease),
+              border-color var(--dur-2) var(--ease);
+}
+.scrolled {
+  background: color-mix(in oklab, var(--bg) 70%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: var(--line);
+}
+.inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 16px var(--s-5);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-6);
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--fg); text-decoration: none;
+  font-weight: 600; font-size: 16px; letter-spacing: -0.02em;
+}
+.links { display: flex; gap: var(--s-6); }
+.links a {
+  color: var(--fg-2); font-size: 14px; text-decoration: none;
+  transition: color var(--dur-2) var(--ease);
+}
+.links a:hover, .links a.active { color: var(--fg); }
+.cta { display: flex; align-items: center; gap: var(--s-3); }
+.themeBtn {
+  background: transparent; border: 1px solid var(--line-2);
+  border-radius: var(--r-3); padding: 7px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all var(--dur-2) var(--ease);
+}
+.themeBtn:hover { border-color: var(--line-3); background: rgba(127,127,127,0.06); }
+.arrow { transition: transform var(--dur-2) var(--ease); }
+.cta a:hover .arrow { transform: translateX(2px); }
+@media (max-width: 800px) { .links { display: none; } }
