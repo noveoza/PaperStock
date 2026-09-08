@@ -30,13 +30,7 @@ src/pages/app/(앱 대시보드) · src/pages/auth/(로그인·회원가입) · 
 
 ## 기본 규칙
 
-CLAUDE.md 의 모든 규칙을 준수한다. 아래는 앱 화면 작업에 대한 보충사항이다.
-
-### 디자인 토큰 우선
-
-- 색상은 무조건 `tokens.css` 변수 (raw hex 금지).
-- 등락 표기는 `--gain` / `--gain-bg` / `--loss` / `--loss-bg`.
-- 다크/라이트 분기 컴포넌트에서 직접 쓰지 말 것.
+CLAUDE.md 의 모든 규칙을 준수한다. **「행동 원칙」(Think → Simplicity → Surgical → Goal-Driven) 포함.** 아래는 앱 화면 작업에 대한 보충사항이다.
 
 ## 작업 범위
 
@@ -141,9 +135,3 @@ export function useHoldings() {
 - 페이지·앱 셸 스타일은 폴더 옆 `*.module.css`.
 - 재사용성 보이면 fe-component 위임 → `src/components/` 프리미티브로 승격, 결과 메시지에 명시.
 
-## 파일 네이밍 / 출력 절약
-
-CLAUDE.md 「파일 네이밍 규칙」 + 「출력 절약」 준수.
-- 페이지: PascalCase (`Portfolio.tsx`, `Login.tsx`).
-- 훅: `useXxx` (`useAuth.ts`, `useHoldings.ts`).
-- 유틸: camelCase (`firebase.ts`, `firestore.ts`, `api.ts`).

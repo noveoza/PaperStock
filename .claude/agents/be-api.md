@@ -36,7 +36,7 @@ Firebase 도입 후 백엔드 범위는 다음으로 한정된다:
 
 ## 기본 규칙
 
-CLAUDE.md 의 모든 규칙을 준수한다. 아래는 server/ 작업에 대한 보충사항이다.
+CLAUDE.md 의 모든 규칙을 준수한다. **「행동 원칙」(Think → Simplicity → Surgical → Goal-Driven) 포함.** 아래는 server/ 작업에 대한 보충사항이다.
 
 ### 스택 (확정)
 
@@ -141,9 +141,3 @@ grep -rn "queryKey:" src/
 ```
 영향 파일 목록을 결과 메시지에 포함하여 fe-app 에이전트 후속 작업.
 
-## 파일 네이밍 / 출력 절약
-
-CLAUDE.md 「파일 네이밍 규칙」 + 「출력 절약」 준수.
-- 라우트: 도메인 단어 (`markets.ts`, `trade.ts`, `users.ts`).
-- 서비스/유틸: camelCase (`tradeService.ts`, `marketService.ts`).
-- Firestore 컬렉션: 복수 소문자, 필드 snake_case.
