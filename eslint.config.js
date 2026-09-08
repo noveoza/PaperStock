@@ -6,7 +6,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 export default [
-  { ignores: ['dist', 'storybook-static'] },
+  { ignores: ['dist', 'server/dist', 'storybook-static'] },
   js.configs.recommended,
   {
     files: ['**/*.{ts,tsx}'],

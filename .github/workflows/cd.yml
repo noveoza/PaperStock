@@ -1,0 +1,108 @@
+# Required GitHub secrets:
+#   GCP_PROJECT_ID      - GCP / Firebase project id (paperstock-e0707)
+#   GCP_REGION          - Cloud Run + Artifact Registry region
+#   GCP_WIF_PROVIDER    - Workload Identity Federation provider resource name
+#   GCP_DEPLOY_SA       - service account used by google-github-actions/auth (WIF)
+#   GCP_RUN_SA          - runtime service account bound to the Cloud Run service
+#   VITE_FIREBASE_API_KEY
+#   VITE_FIREBASE_AUTH_DOMAIN
+#   VITE_FIREBASE_PROJECT_ID
+#   VITE_FIREBASE_STORAGE_BUCKET
+#   VITE_FIREBASE_MESSAGING_SENDER_ID
+#   VITE_FIREBASE_APP_ID
+#   VITE_FIREBASE_MEASUREMENT_ID
+
+name: CD
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SA }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker auth
+        run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+
+      - name: Build and push image
+        run: |
+          IMAGE="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/paperstock/server:${{ github.sha }}"
+          docker build -t "$IMAGE" ./server
+          docker push "$IMAGE"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        run: |
+          gcloud run deploy paperstock-server \
+            --image "$IMAGE" \
+            --region "${{ secrets.GCP_REGION }}" \
+            --service-account "${{ secrets.GCP_RUN_SA }}" \
+            --allow-unauthenticated \
+            --set-env-vars "NODE_ENV=production,QUOTE_PROVIDER=yahoo,FIREBASE_PROJECT_ID=${{ secrets.GCP_PROJECT_ID }},CORS_ORIGIN=https://${{ secrets.GCP_PROJECT_ID }}.web.app"
+          URL="$(gcloud run services describe paperstock-server --region "${{ secrets.GCP_REGION }}" --format 'value(status.url)')"
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      - name: Smoke test
+        run: curl -fsS "${{ steps.deploy.outputs.url }}/health"
+
+  frontend:
+    needs: backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            server/package-lock.json
+
+      - run: npm ci
+
+      - name: Build web
+        env:
+          VITE_API_BASE: ${{ needs.backend.outputs.url }}
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+        run: npm run build:web
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SA }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy to Firebase Hosting
+        run: npx --yes firebase-tools@13 deploy --only hosting --project "${{ secrets.GCP_PROJECT_ID }}" --non-interactive
+
+      - name: Smoke test
+        run: curl -fsS "https://${{ secrets.GCP_PROJECT_ID }}.web.app" > /dev/null
